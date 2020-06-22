@@ -51,6 +51,17 @@ Signin/Sign up/Signout - Users can sign in and sign out, non-users can sign up
 - Auth Form
 - Infinite Card Panel
 
+### Services
+- Auth
+  - auth.login(user)
+  - auth.logout()
+  - auth.signup(user)
+- Story
+  - story.create(story)
+  - story.delete(id)
+  - story.like(id)
+  - story.dislike(id
+
 # Server
 https://github.com/polymurph13/Blustr-Server
 
@@ -72,5 +83,49 @@ https://github.com/polymurph13/Blustr-Server
 - dislikes - Number // required
 - views - Number // required
 
+## API Endpoint/Backend Routes
+- GET /auth/curr-user
+- POST /auth/signup
+  - body:
+    - username
+    - email
+    - passHash
+- POST /auth/signin
+  - body:
+    - username
+    - passHash
+- POST /auth/logout
+  - body: (empty)
+- POST /story/create
+  - body:
+    - content
+    - date
+    - author
+- POST /story/like
+  - body:
+    - storyId
+- POST /story/dislike
+  - body:
+    - storyId
+- POST /story/view
+  - body:
+    - storyId
+- GET /story
 
+## Links
+
+## Git Tasks/Project
+https://github.com/polymurph13/Blustr-Client/projects/1
+
+## Git
+### Client
+https://github.com/polymurph13/Blustr-Client
+### Server
+https://github.com/polymurph13/Blustr-Server
+
+### Deploy
+to be added
+
+### Slides
+to be added
 

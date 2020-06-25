@@ -1,0 +1,12 @@
+:root {
+  --primary-color-bright: #e8e9f3;
+  --primary-color-light: #cecece;
+  --primary-color-dark: #a6a6a8;
+  --secondary-color: #272727;
+  --highlight-color: #b1e5f2;
+}
+
+body {
+  margin: 0;
+  background-color: var(--primary-color-bright);
+}

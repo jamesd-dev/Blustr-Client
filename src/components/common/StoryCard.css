@@ -1,0 +1,37 @@
+#story-card {
+    width: 40%;
+    position: relative;
+    height: max-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5rem;
+    border-radius: 1rem;
+    margin: .5rem;
+    box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
+    background-color: var(--primary-color-bright);
+}
+
+#story-card #story-card-cover-image {
+    width: 100%;
+    object-fit: contain;
+    border-radius: 1rem;
+    -webkit-mask-image: linear-gradient(to top, transparent 15%, black 100%);
+}
+
+#story-card-text-panel {
+    width: 60%;
+    position: absolute;
+    text-align: center;
+    bottom: .5rem;
+}
+
+#story-card-title {
+    font-size: 0.8rem;
+}
+
+#story-card-teaser {
+    font-size: 0.5rem;
+    text-align: justify;
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 100%);
+}

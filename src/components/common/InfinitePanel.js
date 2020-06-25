@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import StoryCard from './StoryCard'
+import './InfinitePanel.css'
 
 export default class InfinitePanel extends Component {
 
@@ -21,14 +23,13 @@ export default class InfinitePanel extends Component {
 
     render() {
         return (
-            <>
-                <p>InfinitePanel</p>
+            <div id='infinite-panel'>
                 {
                     this.props.stories.map((story, index) => {
-                        return (<p key={index}>{story._id}</p>)
+                        return <StoryCard key={index} story={story}/>
                     })
                 }
-            </>
+            </div>
         );
     }
 

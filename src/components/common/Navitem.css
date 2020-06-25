@@ -1,0 +1,11 @@
+.nav-icon i {
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--secondary-color);
+    transition: .2s ease-out;
+}
+
+.nav-icon i:hover {
+    color: var(--highlight-color);
+    transition: .2s ease-out;
+}

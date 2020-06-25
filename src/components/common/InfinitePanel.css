@@ -1,7 +1,6 @@
 #infinite-panel {
     display: grid;
     gap: .5rem;
-
     grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
     grid-auto-rows: span 2 / auto;
 }

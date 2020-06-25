@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
-import InfinitePanel from '../common/InfinitePanel'
 import Axios from 'axios';
 import config from '../../config';
+import InfinitePanel from '../common/InfinitePanel'
+import Navbar from '../common/Navbar'
 
 export default class ViewPage extends Component {
 
@@ -44,6 +45,7 @@ export default class ViewPage extends Component {
 
         return (
             <div id="view-page">
+                <Navbar items={[{text: 'Create', icon: 'fas fa-edit', link: '/story/create'}]}/>
                 <InfinitePanel stories={this.state.stories} requestNextPage={this.requestNextPage}/>
             </div>
         );

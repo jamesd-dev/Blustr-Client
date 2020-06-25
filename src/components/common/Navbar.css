@@ -1,0 +1,13 @@
+#navbar {
+    height: 2rem;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: var(--primary-color-bright);
+    z-index: 10;
+    box-shadow: 0px 2px 24px 25px var(--primary-color-bright);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding-bottom: .8rem;
+}

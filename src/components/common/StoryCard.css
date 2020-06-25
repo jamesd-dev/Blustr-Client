@@ -1,15 +1,21 @@
 #story-card {
-    width: 40%;
     position: relative;
-    height: max-content;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 5rem;
     border-radius: 1rem;
     margin: .5rem;
     box-shadow: 0px 0px 5px 1px rgba(0,0,0,0.2);
     background-color: var(--primary-color-bright);
+    overflow: hidden;
+}
+
+#inner-story-card {
+    padding-bottom: 3rem;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    align-items: center;
+    -webkit-mask-image: linear-gradient(to top, transparent 5%, black 20%);
 }
 
 #story-card #story-card-cover-image {
@@ -23,15 +29,16 @@
     width: 60%;
     position: absolute;
     text-align: center;
-    bottom: .5rem;
+    top: 50%;
 }
 
 #story-card-title {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
+    letter-spacing: .1rem;
+    text-align: justify;
 }
 
 #story-card-teaser {
     font-size: 0.5rem;
     text-align: justify;
-    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 100%);
 }

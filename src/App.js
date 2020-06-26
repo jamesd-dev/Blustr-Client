@@ -11,6 +11,9 @@ function App() {
       <Route exact path='/view' render={() => {
         return <ViewPage/>
       }}/>
+      <Route path='/' render={() => {
+        return <ViewPage/>
+      }}/>
     </Switch>
     </>
   );

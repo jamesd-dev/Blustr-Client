@@ -4,6 +4,8 @@
   --primary-color-dark: #a6a6a8;
   --secondary-color: #272727;
   --highlight-color: #b1e5f2;
+
+  --primary-color-bright-frosted: rgba(232,233,243, .83);
 }
 
 body {

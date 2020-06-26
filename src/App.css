@@ -10,4 +10,9 @@ body {
   margin: 0;
   background-color: var(--primary-color-bright);
   font-family: 'Poppins', sans-serif;
+  color: var(--secondary-color);
+}
+
+.scroll-freeze {
+  overflow: hidden;
 }

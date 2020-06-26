@@ -3,16 +3,20 @@ import Axios from 'axios';
 import config from '../../config';
 import InfinitePanel from '../common/InfinitePanel'
 import Navbar from '../common/Navbar'
+import CreatePanel from '../CreatePanel';
 
 export default class ViewPage extends Component {
 
     state = {
         stories: [],
         page: 0,
+        viewPanel: <></>,
+        navItems: [],
     }
 
     componentDidMount() {
         this.fetchPage(this.state.page);
+        this.loadViewPanel();
     }
 
     fetchPage(page) {
@@ -41,13 +45,46 @@ export default class ViewPage extends Component {
         this.fetchPage(this.state.page);
     }
 
-    render() {
+    loadCreatePanel = () => {
+        document.querySelector('body').classList.add('scroll-freeze');
+        this.setState({
+            viewPanel: <CreatePanel handleSubmit={this.handleCreateSubmit}/>,
+            navItems: [
+                {text: 'Accept', icon: 'fas fa-check', click: this.loadViewPanel},
+                {text: 'Accept', icon: 'fas fa-times', click: this.loadViewPanel},
+            ],
+        })
+        console.log('changed view to create');
+    }
 
+    loadViewPanel = () => {
+        document.querySelector('body').classList.remove('scroll-freeze');
+        this.setState({
+            viewPanel: <></>,
+            navItems: [
+                {text: 'Create', icon: 'fas fa-edit', click: this.loadCreatePanel},
+            ],
+        })
+        console.log('changed view to view');
+    }
+
+    handleCreateAccept = () => {
+        document.getElementById('form').submit();
+    }
+
+    handleCreateSubmit = () => {
+        this.loadViewPanel();
+    }
+
+    render() {
         return (
-            <div id="view-page">
-                <Navbar items={[{text: 'Create', icon: 'fas fa-edit', link: '/story/create'}]}/>
-                <InfinitePanel stories={this.state.stories} requestNextPage={this.requestNextPage}/>
-            </div>
+            (
+                <div id="view-page">
+                    <Navbar items={this.state.navItems}/>
+                    <InfinitePanel stories={this.state.stories} requestNextPage={this.requestNextPage}/>
+                    {this.state.viewPanel}
+                </div>
+            )
         );
     }
 

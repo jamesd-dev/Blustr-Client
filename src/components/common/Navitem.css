@@ -3,6 +3,12 @@
     cursor: pointer;
     color: var(--secondary-color);
     transition: .2s ease-out;
+    text-decoration: none;
+}
+
+.nav-icon i:visited {
+    color: var(--secondary-color);
+    transition: .2s ease-out;
 }
 
 .nav-icon i:hover {

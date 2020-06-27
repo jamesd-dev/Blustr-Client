@@ -4,6 +4,7 @@ import config from '../../config';
 import InfinitePanel from '../common/InfinitePanel'
 import Navbar from '../common/Navbar'
 import CreatePanel from '../CreatePanel';
+import AuthPanel from '../AuthPanel';
 
 export default class ViewPage extends Component {
 
@@ -11,7 +12,7 @@ export default class ViewPage extends Component {
         stories: [],
         page: 0,
         viewPanel: <></>,
-        navItems: [],
+        navItems: []
     }
 
     componentDidMount() {
@@ -46,15 +47,33 @@ export default class ViewPage extends Component {
     }
 
     loadCreatePanel = () => {
+
+        if(!this.props.loggedInUser) {
+            this.loadAuthPanel();
+            return;
+        }
+
         document.querySelector('body').classList.add('scroll-freeze');
         this.setState({
             viewPanel: <CreatePanel handleSubmit={this.handleCreateSubmit}/>,
             navItems: [
-                {text: 'Accept', icon: 'fas fa-check', click: this.loadViewPanel},
-                {text: 'Accept', icon: 'fas fa-times', click: this.loadViewPanel},
+                {text: 'Accept', icon: 'fas fa-check', click: this.handleCreateAccept},
+                {text: 'Cancel', icon: 'fas fa-times', click: this.loadViewPanel},
             ],
         })
         console.log('changed view to create');
+    }
+
+    loadAuthPanel = () => {
+        document.querySelector('body').classList.add('scroll-freeze');
+        this.setState({
+            viewPanel: <AuthPanel/>,
+            navItems: [
+                {text: 'Accept', icon: 'fas fa-check', click: this.handleAuthAccept},
+                {text: 'Cancel', icon: 'fas fa-times', click: this.loadViewPanel},
+            ],
+        })
+        console.log('changed view to auth');
     }
 
     loadViewPanel = () => {
@@ -69,14 +88,42 @@ export default class ViewPage extends Component {
     }
 
     handleCreateAccept = () => {
-        document.getElementById('form').submit();
-    }
-
-    handleCreateSubmit = () => {
+        let content = this.processFormContent();
+        // create post
         this.loadViewPanel();
     }
 
+    handleAuthAccept = () => {
+        let content = this.processFormContent();
+        // create post
+        
+        let email = content[2];
+    let username = content[0];
+    let password = content[1];
+    let route = (email) ? 'signup' : 'signin'
+    Axios.post(`${config.API_URL}/${route}`, {
+      email: email,
+      username: username,
+      password: password
+    }, { withCredentials: true})
+    .then((res) => {
+        this.props.updateUserData(res.props);
+        this.loadViewPanel();
+    })
+
+        
+    }
+
+    processFormContent = () => {
+        // strips values from any elements in the form that has them.
+        let formChildren =  document.getElementById('form').childNodes;
+        let content = [].map.call(formChildren, (section) => {return section.firstChild.value});
+        content = [].filter.call(content, (section) => {return section});
+        return content;
+    }
+
     render() {
+        console.log(this.props.loggedInUser);
         return (
             (
                 <div id="view-page">

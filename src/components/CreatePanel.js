@@ -7,7 +7,7 @@ export default class CreatePanel extends Component {
   render() {
     return (
       <>
-        <div id="create-panel-bg">
+        <div id="general-panel">
           <div id="create-panel">
               <form onSubmit={this.props.handleSubmit} id='form'>
                 <CreateInput/>

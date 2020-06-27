@@ -24,8 +24,7 @@
 #story-card #story-card-cover-image {
     width: 100%;
     object-fit: contain;
-    border-radius: 1rem;
-    -webkit-mask-image: linear-gradient(to top, transparent 30%, black 80%);
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, black 100%);
 }
 
 #story-card-text-panel {

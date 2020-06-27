@@ -2,84 +2,7 @@ import React, { Component } from "react";
 import "./CreateInput.css";
 
 export default class CreateInput extends Component {
-  // state = {
-  //     inputList: [],
-  //     input: <></>
-  // }
-
-  // componentDidMount() {
-  //     this.loadAddInput();
-  // }
-
-  // render () {
-  //     return (
-  //         <>
-  //             {
-  //                 this.state.inputList.map((elem, index) => {return <div className='create-input-div' key={index}>
-  //                     <textarea onBlur={this.handleFocusOut}>{elem}</textarea>
-  //                 </div>})
-  //             }
-  //             <div className='create-input-div'>
-  //                 {/* contains either a +, list of buttons or an input, determined by the buttons */}
-  //                 {this.state.input}
-  //             </div>
-  //         </>
-  //     )
-  // }
-
-  // loadAddInput = () => {
-  //     this.setState({
-  //         input: <div id='icon-div'><i className="fas fa-plus create-icon" onClick={this.handleAdd}/></div>
-  //     })
-  // }
-
-  // loadSelectInput = () => {
-  //     this.setState({
-  //         input: <div id='icon-div'>
-  //         <i className="fas fa-times create-icon" onClick={this.handleCancel}/>
-  //         <i className="fas fa-edit create-icon" onClick={this.handleTextInput}/>
-  //         </div>
-  //     })
-  // }
-
-  // loadTextInput = () => {
-  //     this.setState({
-  //         input: <textarea name='textInput' className='create-textInput' onBlur={this.handleFocusOut} autoFocus></textarea>
-  //     })
-  // }
-
-  // loadImageInput = () => {
-  //     this.setState({
-  //         input: <input type='text' name='imageInput' className='create-imageInput' placeholder='image url' autoFocus/>
-  //     })
-  // }
-
-  // handleAdd = () => {
-  //     this.loadSelectInput();
-  // }
-
-  // handleCancel = () => {
-  //     this.loadAddInput();
-  // }
-
-  // handleTextInput = () => {
-  //     this.loadTextInput();
-  // }
-
-  // handleFocusOut = (e) => {
-  //     e.preventDefault();
-  //     let value = e.target.value;
-  //     if(value == '') {e.target.innerHtml = <div id='icon-div'><i className="fas fa-plus create-icon" onClick={this.handleAdd}/></div>;}
-  //     else {
-  //         this.setState({
-  //             inputList: [...this.state.inputList, e.target.value]
-  //         })
-  //         console.log(this.state.inputList);
-  //         console.log(this.state.inputList.findIndex((elem) => {return elem === value}));
-  //         this.loadAddInput();
-  //     }
-  // }
-
+  
   componentDidMount() {
     this.setState({
       sections: [{ type: this.state.type.BLANK, index: 0, value: "" }],
@@ -90,10 +13,10 @@ export default class CreateInput extends Component {
     sections: [],
     type: {
       // defines type of html element to wrap section in later
-      BLANK: 1,
-      OPTIONS: 2,
-      TEXT: 3,
-      IMAGE: 4,
+      BLANK: 'BLANK',
+      OPTIONS: 'OPTIONS',
+      TEXT: 'TEXT',
+      IMAGE: 'IMAGE',
     },
   };
 
@@ -114,22 +37,20 @@ export default class CreateInput extends Component {
         return (
           <div className="create-input-div" key={section.index}>
             <div id="icon-div">
-              <i className="fas fa-plus create-icon" onClick={this.handleAdd} />
+              <i className="fas fa-plus create-icon" onClick={this.handleAdd} index={section.index} sectype={section.type}/>
             </div>
           </div>
         );
       }
       case this.state.type.OPTIONS: {
         return (
-          <div className="create-input-div" key={section.key}>
+          <div className="create-input-div" key={section.index}>
             <div id="icon-div">
-              <i
-                className="fas fa-times create-icon"
-                onClick={this.handleCancel}
-              />
               <i
                 className="fas fa-edit create-icon"
                 onClick={this.handleTextInput}
+                index={section.index}
+                sectype={section.type}
               />
             </div>
           </div>
@@ -145,6 +66,8 @@ export default class CreateInput extends Component {
               autoFocus
               onChange={this.updateValue}
               value={section.value}
+              index={section.index}
+              sectype={section.type}
             ></textarea>
           </div>
         );
@@ -160,6 +83,8 @@ export default class CreateInput extends Component {
               autoFocus
               onChange={this.updateValue}
               value={section.value}
+              index={section.index}
+              sectype={section.type}
             />
           </div>
         );
@@ -167,15 +92,70 @@ export default class CreateInput extends Component {
       default: {
         console.log("Unknown section type in CreateInput");
         return (
-          <div id="icon-div">
-            <i className="fas fa-plus create-icon" onClick={this.handleAdd} />
+        <div className="create-input-div" key={section.index}>
           </div>
         );
       }
     }
   };
 
-  updateValue = () => {};
+  updateValue = (e) => {
+    let sections = this.state.sections;
+    sections[e.target.getAttribute('index')].value = e.target.value;
+    this.setState({
+        sections: sections
+    })
+  };
 
-  handleFocusOut = (e) => {};
+  handleFocusOut = (e) => {
+    if(e.target.value === '') {
+        this.removeSection(e);
+    }
+
+    let type = '';
+
+    if(this.state.sections.length > 0) {
+        type = this.state.sections[this.state.sections.length - 1].type;
+    }
+    if(type !== this.state.type.BLANK && type !== this.state.type.OPTIONS) {
+        let sections = this.state.sections;
+        sections.push({ type: this.state.type.BLANK, index: 0, value: "" });
+        this.setState({
+            sections: sections
+        });
+        this.reindexSections();
+    }
+  };
+
+  removeSection = (e) => {
+    let sections = this.state.sections.splice(e.target.getAttribute('index'), 1);
+    this.setState({
+        sections: sections
+    })
+    this.reindexSections();
+  }
+
+  reindexSections = () => {
+    let sections = this.state.sections;
+    sections = sections.map((section, index) => {section.index = index; return section;})
+    this.setState({
+        sections: sections
+    })
+  }
+
+  handleAdd = (e) => {
+    let sections = this.state.sections;
+    sections[e.target.getAttribute('index')].type = this.state.type.OPTIONS;
+    this.setState({
+        sections: sections
+    })
+  }
+
+  handleTextInput = (e) => {
+    let sections = this.state.sections;
+    sections[e.target.getAttribute('index')].type = this.state.type.TEXT;
+    this.setState({
+        sections: sections
+    })
+  }
 }

@@ -21,3 +21,15 @@
     width: 100%;
     color: var(--secondary-color);
 }
+
+
+.create-input-div .create-textInput {
+    resize: none;
+    border: none;
+    background-color: inherit;
+}
+
+.create-input-div .create-textInput:focus {
+    border: none;
+    outline: none;
+}

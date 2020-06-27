@@ -11,3 +11,13 @@
         grid-column: span 2/ auto;
     }
 }
+
+@media screen and (min-width: 900px) {
+    .story-card {
+        grid-column: span 2/ auto;
+    }
+
+    .card-wide {
+        grid-column: span 3/ auto;
+    }
+}

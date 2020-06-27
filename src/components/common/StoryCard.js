@@ -5,7 +5,7 @@ export default class StoryCard extends Component {
   render() {
     const story = this.props.story;
     return (
-      <div id="story-card" className={(Math.random() * 4 < 1) ? "card-wide" : ''}>
+      <div id="story-card" className={(Math.random() * 4 < 1) ? "card-wide story-card" : 'story-card'}>
       <div id='inner-story-card'>
         <img
           id="story-card-cover-image"

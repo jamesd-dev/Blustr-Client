@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import "./App.css";
 import ViewPage from "./components/pages/ViewPage";
 import config from "./config";
+import LoremSeed from './components/common/LoremSeed'
 
 class App extends Component {
   componentDidMount() {

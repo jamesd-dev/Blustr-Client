@@ -27,7 +27,7 @@ export default class InfinitePanel extends Component {
                 <div id='infinite-panel'>
                     {
                         this.props.stories.map((story, index) => {
-                            return <StoryCard key={index} story={story}/>
+                            return <StoryCard key={index} story={story} showStory={this.props.showStory}/>
                         })
                     }
                 </div>

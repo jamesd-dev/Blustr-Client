@@ -5,6 +5,7 @@ import InfinitePanel from '../common/InfinitePanel'
 import Navbar from '../common/Navbar'
 import CreatePanel from '../CreatePanel';
 import AuthPanel from '../AuthPanel';
+import SinglePanel from '../SinglePanel'
 
 export default class ViewPage extends Component {
 
@@ -66,6 +67,18 @@ export default class ViewPage extends Component {
             viewPanel: <CreatePanel handleSubmit={this.handleCreateSubmit}/>,
             navItems: [
                 {text: 'Accept', icon: 'fas fa-check', click: this.handleCreateAccept},
+                {text: 'Cancel', icon: 'fas fa-times', click: this.loadViewPanel},
+            ],
+        })
+        console.log('changed view to create');
+    }
+
+    loadSinglePanel = (story) => {
+
+        document.querySelector('body').classList.add('scroll-freeze');
+        this.setState({
+            viewPanel: <SinglePanel story={story}/>,
+            navItems: [
                 {text: 'Cancel', icon: 'fas fa-times', click: this.loadViewPanel},
             ],
         })
@@ -155,7 +168,7 @@ export default class ViewPage extends Component {
             (
                 <div id="view-page">
                     <Navbar items={this.state.navItems}/>
-                    <InfinitePanel stories={this.state.stories} requestNextPage={this.requestNextPage}/>
+                    <InfinitePanel stories={this.state.stories} requestNextPage={this.requestNextPage} showStory={this.loadSinglePanel}/>
                     {this.state.viewPanel}
                 </div>
             )

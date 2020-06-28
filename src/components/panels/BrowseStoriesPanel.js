@@ -1,15 +1,18 @@
+// libraries
 import React, {Component} from 'react';
-import StoryCard from './StoryCard'
-import './InfinitePanel.css'
+// styles
+import './styles/BrowseStoriesPanel.css'
+// components
+import StoryCard from '../cards/StoryCard'
 
-export default class InfinitePanel extends Component {
+export default class BrowseStoriesPanel extends Component {
 
     componentDidMount() {
-        window.addEventListener('scroll', this.handleScroll, false)
+        window.addEventListener('scroll', this.handleScroll, false);
     }
 
     componentWillUnmount() {
-        window.removeEventListener('scroll', this.handleScroll, false)
+        window.removeEventListener('scroll', this.handleScroll, false);
     }
 
     // calls for next page of stories if user has scrolled to the bottom of the screen
@@ -24,10 +27,10 @@ export default class InfinitePanel extends Component {
     render() {
         return (
             <>
-                <div id='infinite-panel'>
+                <div id='browse-stories-panel'>
                     {
                         this.props.stories.map((story, index) => {
-                            return <StoryCard key={index} story={story} showStory={this.props.showStory}/>
+                            return <StoryCard key={index} story={story} />
                         })
                     }
                 </div>

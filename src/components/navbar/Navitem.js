@@ -1,8 +1,8 @@
 import React from 'react';
-import './Navitem.css'
+import './styles/Navitem.css'
 
 export default function NavItem(props) {
-    //takes props in the form {text, icon}
+    //takes props in the form {text, icon, click}
     return (
         <div className='nav-icon'>
             <i className={props.item.icon} onClick={props.item.click}/>

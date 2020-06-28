@@ -1,10 +1,13 @@
+// libraries
 import React, { Component } from "react";
 import axios from "axios";
 import { Switch, Route } from "react-router-dom";
-import "./App.css";
-import ViewPage from "./components/pages/ViewPage";
+// useful data
 import config from "./config";
-import LoremSeed from './components/common/LoremSeed'
+// styles
+import "./App.css";
+// components
+import ViewStoriesPage from "./components/pages/ViewStoriesPage";
 
 class App extends Component {
   componentDidMount() {
@@ -14,7 +17,7 @@ class App extends Component {
   }
 
   state = {
-    loggedinUser: {}
+    loggedinUser: {},
   };
 
   render() {
@@ -22,16 +25,14 @@ class App extends Component {
       <>
         <Switch>
           <Route
-            exact
-            path="/view"
-            render={() => {
-              return <ViewPage loggedInUser={this.state.loggedInUser} updateUserData={this.updateUserData}/>;
-            }}
-          />
-          <Route
             path="/"
             render={() => {
-              return <ViewPage loggedInUser={this.state.loggedInUser} updateUserData={this.updateUserData}/>;
+              return (
+                <ViewStoriesPage
+                  loggedInUser={this.state.loggedInUser}
+                  updateUserData={this.updateUserData}
+                />
+              );
             }}
           />
         </Switch>
@@ -57,10 +58,9 @@ class App extends Component {
 
   updateUserData = (data) => {
     this.setState({
-      loggedInUser: data
-    })
-  }
-
+      loggedInUser: data,
+    });
+  };
 }
 
 export default App;

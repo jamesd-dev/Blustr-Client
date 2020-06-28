@@ -1,5 +1,5 @@
 import React from 'react';
-import './Navbar.css'
+import './styles/Navbar.css'
 import Navitem from './Navitem'
 
 export default function Navbar(props) {

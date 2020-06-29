@@ -5,6 +5,7 @@ import './styles/FocusPanel.css'
 // components
 import CreatePanel from './create/CreatePanel';
 import AuthPanel from './auth/AuthPanel'
+import ViewCardPanel from './viewCard/ViewCardPanel'
 
 export default class FocusPanel extends Component {
 
@@ -41,6 +42,7 @@ export default class FocusPanel extends Component {
     getPanelComponent = () => {
         switch (this.state.panelState) {
             case 'create' : return this.loadCreate();
+            case 'viewCard' : return this.loadViewCard(this.props.story)
             default:
                 return <></>
         }
@@ -50,12 +52,22 @@ export default class FocusPanel extends Component {
         if(!this.props.loggedInUser) {
             return this.loadAuth();
         } else {
-            return <CreatePanel closeFocusPanel={this.props.closeFocusPanel}/>
+            return <CreatePanel
+             closeFocusPanel={this.props.closeFocusPanel}
+             refreshStories={this.props.refreshStories}
+             />
         }
     }
 
+    loadViewCard = (story) => {
+        return <ViewCardPanel
+             closeFocusPanel={this.props.closeFocusPanel}
+             story={story}
+             />
+    }
+
     loadAuth = () => {
-        return <AuthPanel closeFocusPanel={this.props.closeFocusPanel}/>
+        return <AuthPanel closeFocusPanel={this.props.closeFocusPanel} updateUserData={this.props.updateUserData}/>
     }
 
 }

@@ -17,6 +17,7 @@ export default class ViewStoriesPage extends Component {
         stories: [],
         page: 0, // data has to be split into pages for the infinite scroll feature to work
         useFocusPanel: false, // toggles the panel that other view features branch from, such as create, auth and viewing a single story.
+        focusPanelState: '', // series of states for the focuspanel component to switch between
     }
 
     componentDidMount() {
@@ -59,24 +60,66 @@ export default class ViewStoriesPage extends Component {
         })
     }
 
+    setUseFocusPanel = (bool) => {
+        this.setState({
+            useFocusPanel: bool
+        })
+    }
+
     loadCreatePanel = () => {
-        this.toggleUseFocusPanel();
+        this.setState({
+            useFocusPanel: true,
+            focusPanelState: <FocusPanel
+            panelState={'create'}
+           closeFocusPanel={this.toggleUseFocusPanel}
+           loggedInUser={this.props.loggedInUser}
+           updateUserData={this.props.updateUserData}
+           refreshStories={this.refreshStories}
+            />
+        });
+    }
+
+    loadViewCardPanel = (story) => {
+        this.setState({
+            useFocusPanel: true,
+            focusPanelState: <FocusPanel
+            panelState={'viewCard'}
+           closeFocusPanel={this.toggleUseFocusPanel}
+           loggedInUser={this.props.loggedInUser}
+           updateUserData={this.props.updateUserData}
+           refreshStories={this.refreshStories}
+           story={story}
+            />
+        });
+    }
+
+    getFocusPanel() {
+        return this.state.focusPanelState
+    }
+
+    // reboots the stories array.
+    // using it mainly for showing new posts
+    refreshStories = () => {
+        this.setState({
+            stories: []
+        })
+        this.requestNextPage();
+    }
+
+    showStory = (story) => {
+        this.loadViewCardPanel(story);
     }
 
     render() {
         return (
             (
                 <div id="view-stories-page">
-                    <BrowseStoriesPanel stories={this.state.stories} requestNextPage={this.requestNextPage}/>
+                    <BrowseStoriesPanel stories={this.state.stories} requestNextPage={this.requestNextPage} showStory={this.showStory}/>
                     {
                         // Navbar is called seperately in other components in focus panel.
                         // But has to be called otherwise here.
                         // panelState is used to call the specific panel built on top of the base focusPanel
-                        (this.state.useFocusPanel) ? <FocusPanel
-                         panelState={'create'}
-                        closeFocusPanel={this.toggleUseFocusPanel}
-                        loggedInUser={this.props.loggedInUser}
-                         /> : <Navbar items={[
+                        (this.state.useFocusPanel) ? this.getFocusPanel() : <Navbar items={[
                             {text: 'Create', icon: 'fas fa-edit', click: this.loadCreatePanel}
                         ]}/>
                     }

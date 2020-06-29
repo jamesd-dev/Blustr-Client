@@ -30,7 +30,7 @@ export default class BrowseStoriesPanel extends Component {
                 <div id='browse-stories-panel'>
                     {
                         this.props.stories.map((story, index) => {
-                            return <StoryCard key={index} story={story} />
+                            return <StoryCard key={index} story={story} showStory={this.props.showStory}/>
                         })
                     }
                 </div>

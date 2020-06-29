@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 // styles
 import './styles/BrowseStoriesPanel.css'
 // components
-import StoryCard from '../cards/StoryCard'
+import StoryCard from '../../cards/StoryCard'
 
 export default class BrowseStoriesPanel extends Component {
 

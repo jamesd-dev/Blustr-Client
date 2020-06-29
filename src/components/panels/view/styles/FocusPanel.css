@@ -12,6 +12,7 @@
 
 #focus-panel #inner-panel {
     overflow: scroll;
+    overflow-x: hidden;
     max-height: 80vh;
     width: 100%;
     border-radius: 1rem;

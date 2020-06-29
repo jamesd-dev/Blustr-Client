@@ -6,8 +6,8 @@ import config from '../../config.js';
 // styles
 import './styles/ViewStoriesPage.css'
 // components
-import BrowseStoriesPanel from '../panels/BrowseStoriesPanel';
-import FocusPanel from '../panels/FocusPanel';
+import BrowseStoriesPanel from '../panels/view/BrowseStoriesPanel';
+import FocusPanel from '../panels/view/FocusPanel';
 import Navbar from '../navbar/Navbar'
 
 
@@ -16,7 +16,7 @@ export default class ViewStoriesPage extends Component {
     state = {
         stories: [],
         page: 0, // data has to be split into pages for the infinite scroll feature to work
-        useFocusPanel: true, // toggles the panel that other view features branch from, such as create, auth and viewing a single story.
+        useFocusPanel: false, // toggles the panel that other view features branch from, such as create, auth and viewing a single story.
     }
 
     componentDidMount() {
@@ -53,6 +53,16 @@ export default class ViewStoriesPage extends Component {
         })
     }
 
+    toggleUseFocusPanel = () => {
+        this.setState({
+            useFocusPanel: !this.state.useFocusPanel
+        })
+    }
+
+    loadCreatePanel = () => {
+        this.toggleUseFocusPanel();
+    }
+
     render() {
         return (
             (
@@ -62,8 +72,12 @@ export default class ViewStoriesPage extends Component {
                         // Navbar is called seperately in other components in focus panel.
                         // But has to be called otherwise here.
                         // panelState is used to call the specific panel built on top of the base focusPanel
-                        (this.state.useFocusPanel) ? <FocusPanel panelState={'create'}/> : <Navbar items={[
-                            {text: 'Create', icon: 'fas fa-edit'}
+                        (this.state.useFocusPanel) ? <FocusPanel
+                         panelState={'create'}
+                        closeFocusPanel={this.toggleUseFocusPanel}
+                        loggedInUser={this.props.loggedInUser}
+                         /> : <Navbar items={[
+                            {text: 'Create', icon: 'fas fa-edit', click: this.loadCreatePanel}
                         ]}/>
                     }
                 </div>

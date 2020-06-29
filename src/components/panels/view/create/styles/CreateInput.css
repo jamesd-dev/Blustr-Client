@@ -1,0 +1,35 @@
+#form {
+    width: 100%;
+}
+
+.create-input-div {
+    width: 100%;
+    height: auto;
+    border-radius: 1rem;
+    background-color: var(--primary-color-bright);
+    display: flex;
+    justify-content: space-evenly;
+    padding: .5rem 1rem;
+    margin: .7rem 0;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 10px 1px rgba(0,0,0,0.05);
+}
+
+.create-input-div #icon-div {
+    display:flex;
+    justify-content: space-evenly;
+    width: 100%;
+    color: var(--secondary-color);
+}
+
+
+.create-input-div .create-textInput {
+    resize: none;
+    border: none;
+    background-color: inherit;
+}
+
+.create-input-div .create-textInput:focus {
+    border: none;
+    outline: none;
+}

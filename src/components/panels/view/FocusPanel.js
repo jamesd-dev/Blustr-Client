@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 // styles
 import './styles/FocusPanel.css'
 // components
+import CreatePanel from './create/CreatePanel';
+import AuthPanel from './auth/AuthPanel'
 
 export default class FocusPanel extends Component {
 
@@ -28,7 +30,7 @@ export default class FocusPanel extends Component {
             <>
                 <div id='focus-panel'>
                     <div id='inner-panel'>
-
+                        {this.getPanelComponent()}
                     </div>
                 </div>
             </>
@@ -37,7 +39,23 @@ export default class FocusPanel extends Component {
 
     // returns component based on the panel state
     getPanelComponent = () => {
+        switch (this.state.panelState) {
+            case 'create' : return this.loadCreate();
+            default:
+                return <></>
+        }
+    }
 
+    loadCreate = () => {
+        if(!this.props.loggedInUser) {
+            return this.loadAuth();
+        } else {
+            return <CreatePanel closeFocusPanel={this.props.closeFocusPanel}/>
+        }
+    }
+
+    loadAuth = () => {
+        return <AuthPanel closeFocusPanel={this.props.closeFocusPanel}/>
     }
 
 }

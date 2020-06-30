@@ -11,6 +11,7 @@ export default class FocusPanel extends Component {
 
     state = {
         panelState: '', // The specific component to load onto the base panel
+        loggedInUser: {},
     }
 
     componentDidMount() {
@@ -18,7 +19,8 @@ export default class FocusPanel extends Component {
         // if called from ViewStoriesPage, this sets the panelState passed through
         // otherwise it can direct it's own state
         this.setState({
-            panelState: this.props.panelState
+            panelState: this.props.panelState,
+            loggedInUser: this.props.loggedInUser,
         });
     }
 
@@ -56,7 +58,7 @@ export default class FocusPanel extends Component {
     }
 
     loadCreate = () => {
-        if(!this.props.loggedInUser) {
+        if(!this.state.loggedInUser) {
             return this.loadAuth();
         } else {
             return <CreatePanel
@@ -71,14 +73,22 @@ export default class FocusPanel extends Component {
              closeFocusPanel={this.props.closeFocusPanel}
              story={story}
              loadAuth = {() => {this.setPanelState('auth')}}
-             loggedInUser={this.props.loggedInUser}
+             loggedInUser={this.state.loggedInUser}
              replaceStory={this.props.replaceStory}
             removeStory={this.props.removeStory}
              />
     }
 
     loadAuth = () => {
-        return <AuthPanel closeFocusPanel={this.props.closeFocusPanel} updateUserData={this.props.updateUserData}/>
+        return <AuthPanel closeFocusPanel={this.props.closeFocusPanel} updateUserData={this.updateUserData}/>
+    }
+
+    // ensures that user can use user priviledges without reloading page
+    updateUserData = (user) => {
+        this.props.updateUserData(user);
+        this.setState({
+            loggedInUser: user
+        });
     }
 
 }

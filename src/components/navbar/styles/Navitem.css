@@ -27,5 +27,6 @@
 }
 
 .nav-icon .selected {
-    color: red;
+    color: var(--highlight-color);
+    transition: .2s ease-out;
 }

@@ -48,7 +48,6 @@ class App extends Component {
           loggedInUser: res.data,
         });
         console.log("obtained user data");
-        console.log(this.state.loggedInUser);
       })
       .catch((err) => {
         if (err.response.status === 401) {
@@ -58,6 +57,7 @@ class App extends Component {
   };
 
   updateUserData = (data) => {
+    console.log('updating user data');
     this.setState({
       loggedInUser: data,
     });

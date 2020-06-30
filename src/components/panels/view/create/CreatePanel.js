@@ -57,28 +57,29 @@ export default class CreatePanel extends Component {
 
     // if no images in content, append a random default one to the start
     if (!coverImage)
+      coverImage = this.state.defaultImages[
+        Math.floor(Math.random() * this.state.defaultImages.length)
+      ];
       content.unshift(
-        this.state.defaultImages[
-          Math.floor(Math.random() * this.state.defaultImages.length)
-        ]
+        coverImage
       );
 
-    // create story in database
-    axios.post(
-      `${config.API_URL}/story/create`,
-      { content },
-      { withCredentials: true }
-    )
-      .then(() => {
-        console.log("created post");
-      })
-      .catch((err) => {
-        console.log("failed to create post");
-        console.log("error: ", err);
-      })
-      .finally(() => {
-        this.returnToBrowse();
-      });
+      // create story in database
+      axios.post(
+        `${config.API_URL}/story/create`,
+        { content },
+        { withCredentials: true }
+      )
+        .then(() => {
+          console.log("created post");
+        })
+        .catch((err) => {
+          console.log("failed to create post");
+          console.log("error: ", err);
+        })
+        .finally(() => {
+          this.returnToBrowse();
+        });
   };
 
   getFormContent = () => {

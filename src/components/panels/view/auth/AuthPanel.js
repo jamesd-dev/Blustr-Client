@@ -111,8 +111,9 @@ export default class AuthPanel extends Component {
       )
       .then((res) => {
         console.log('Created user: ', res.data.username)
-        this.props.updateUserData(res.props);
+        this.props.updateUserData(res.data);
         // should reroute to whatever panel called it by default now.
+        // does not however
         this.returnToBrowse();
       })
       .catch((err) => {

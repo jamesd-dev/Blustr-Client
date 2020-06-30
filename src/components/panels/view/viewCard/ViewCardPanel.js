@@ -10,6 +10,10 @@ import Navbar from "../../../navbar/Navbar"
 
 export default class ViewCardPanel extends Component {
 
+    componentDidMount() {
+        this.cssLikeDislikeElement();
+    }
+
   render() {
 
     return (
@@ -45,7 +49,8 @@ export default class ViewCardPanel extends Component {
     axios.get(`${config.API_URL}/story/${this.props.story._id}`)
     .then((story) => {
         this.props.replaceStory(story);
-        if(story.data.likes * 10 < story.data.dislikes) {
+        // has to be +1 likes, else if it gets disliked with 0 likes it gets deleted
+        if((story.data.likes + 1) * 10 < story.data.dislikes) {
             axios.delete(`${config.API_URL}/story/${this.props.story._id}`)
             .then(() => {
                 this.props.removeStory(story.data);
@@ -107,29 +112,29 @@ export default class ViewCardPanel extends Component {
         this.props.loadAuth();
     } else {
         axios.patch( `${config.API_URL}/story/${this.props.story._id}/dislike`, {}, { withCredentials: true })
-        .then((res) => {
-            axios
-            .get(`${config.API_URL}/user`, { withCredentials: true })
-            .then((res) => {
-                this.cssLikeDislikeElement(res);
-            })
-            .catch((err) => {
-                console.log("failed to obtain user data");
-            });
+        .then(() => {
+            this.cssLikeDislikeElement();
         })
         .catch((err) => {console.log(err)})
     }
   }
 
-  cssLikeDislikeElement(res) {
-    let altStory = res.data.alteredStories.find((e) => {
-        console.log(e.storyId + " " + this.props.story._id);
-        return e.storyId === this.props.story._id;
-    });
-    if(altStory.liked) document.getElementsByClassName('fa-thumbs-up')[0].classList.add('selected');
-    else document.getElementsByClassName('fa-thumbs-up')[0].classList.remove('selected');
-    if(altStory.disliked) document.getElementsByClassName('fa-thumbs-down')[0].classList.add('selected');
-    else document.getElementsByClassName('fa-thumbs-down')[0].classList.remove('selected');
+  cssLikeDislikeElement() {
+    axios
+            .get(`${config.API_URL}/user`, { withCredentials: true })
+            .then((res) => {
+                let altStory = res.data.alteredStories.find((e) => {
+                    console.log(e.storyId + " " + this.props.story._id);
+                    return e.storyId === this.props.story._id;
+                });
+                if(altStory.liked) document.getElementsByClassName('fa-thumbs-up')[0].classList.add('selected');
+                else document.getElementsByClassName('fa-thumbs-up')[0].classList.remove('selected');
+                if(altStory.disliked) document.getElementsByClassName('fa-thumbs-down')[0].classList.add('selected');
+                else document.getElementsByClassName('fa-thumbs-down')[0].classList.remove('selected');
+            })
+            .catch((err) => {
+                console.log("failed to obtain user data");
+            });
   }
 
 }

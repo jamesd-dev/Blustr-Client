@@ -100,26 +100,26 @@ export default class ViewStoriesPage extends Component {
   };
 
   replaceStory = (story) => {
-      let newStories = this.state.stories.map((elem) => {
-        if(elem._id === story._id) {
-            return story;
-        } else {
-            return elem;
-        }
-      });
-      this.setState({
-          stories: newStories
-      });
-  }
+    let newStories = this.state.stories.map((elem) => {
+      if (elem._id === story._id) {
+        return story;
+      } else {
+        return elem;
+      }
+    });
+    this.setState({
+      stories: newStories,
+    });
+  };
 
   removeStory = (story) => {
     let newStories = this.state.stories.filter((elem) => {
-        return (elem._id !== story._id)
-      });
-      this.setState({
-          stories: newStories
-      });
-  }
+      return elem._id !== story._id;
+    });
+    this.setState({
+      stories: newStories,
+    });
+  };
 
   getFocusPanel() {
     return this.state.focusPanelState;
@@ -130,7 +130,7 @@ export default class ViewStoriesPage extends Component {
   refreshStories = () => {
     this.setState({
       stories: [],
-      page: 0
+      page: 0,
     });
     this.requestNextPage();
   };
@@ -180,6 +180,15 @@ export default class ViewStoriesPage extends Component {
           "https://images.unsplash.com/photo-1530800633399-2d35227b35b2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
           "https://images.unsplash.com/photo-1512237260610-23782f4c1bfe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60",
           "https://images.unsplash.com/photo-1572989753782-accb88ad01f0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=634&q=80",
+          "https://images.pexels.com/photos/730256/pexels-photo-730256.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          "https://images.pexels.com/photos/1366919/pexels-photo-1366919.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          "https://images.pexels.com/photos/799420/pexels-photo-799420.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          "https://images.pexels.com/photos/3792580/pexels-photo-3792580.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          "https://images.pexels.com/photos/2387877/pexels-photo-2387877.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          "https://images.pexels.com/photos/949592/pexels-photo-949592.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+          "https://images.pexels.com/photos/2233416/pexels-photo-2233416.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            "https://images.pexels.com/photos/721287/pexels-photo-721287.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+            "https://images.pexels.com/photos/730256/pexels-photo-730256.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
         ];
 
         let content = [
@@ -201,25 +210,27 @@ export default class ViewStoriesPage extends Component {
 
         // if no images in content, append a random default one to the start
         if (!coverImage)
-          content.unshift(
-            defaultImages[Math.floor(Math.random() * defaultImages.length)]
-          );
+          coverImage = defaultImages[
+            Math.floor(Math.random() * defaultImages.length)
+          ];
+        content.unshift(coverImage);
 
-        // create story in database
-        axios
-          .post(
-            `${config.API_URL}/story/create`,
-            { content },
-            { withCredentials: true }
-          )
-          .then(() => {
-            console.log("created post");
-          })
-          .catch((err) => {
-            console.log("failed to create post");
-            console.log("error: ", err);
-          });
-      }
+          // create story in database
+          axios
+            .post(
+              `${config.API_URL}/story/create`,
+              { content},
+              { withCredentials: true }
+            )
+            .then(() => {
+              console.log("created post");
+            })
+            .catch((err) => {
+              console.log("failed to create post");
+              console.log("error: ", err);
+            })
+        };
+      
     }
   };
 }

@@ -5,12 +5,13 @@ export default class StoryCard extends Component {
   render() {
     const story = this.props.story;
     return (
-      <div id="story-card" className={(Math.random() * 4 < 1) ? 'story-card card-wide' : 'story-card'} onClick={() => {this.props.showStory(story)}}>
+      <div id="story-card" className={(Math.random() * 5 < 1) ? 'story-card card-wide' : 'story-card'} onClick={() => {this.props.showStory(story)}}>
       <div id='inner-story-card'>
         <img
           id="story-card-cover-image"
           src={this.getFirstImage()}
           alt="story cover"
+          onLoad={this.checkIfWide}
         />
         <div id="story-card-text-panel">
           <p id="story-card-teaser">
@@ -26,7 +27,7 @@ export default class StoryCard extends Component {
       </div>
     );
   }
-
+  
   getFirstImage = () => {
     return this.props.story.content
     .find((elem) => {
@@ -46,7 +47,7 @@ export default class StoryCard extends Component {
       ));
     })
     .split(" ")
-    .slice(0, 20)
+    .slice(0, 10)
     .join(" ");
 
     return firstXWords;

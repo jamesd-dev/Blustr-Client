@@ -1,0 +1,14 @@
+#view-card-content {
+    width: 100%;
+}
+
+#view-card-content .story-image {
+    width: 100%;
+}
+
+#view-card-content .story-text {
+    overflow-wrap: break-word;
+    text-align: justify;
+    padding: 1rem 2rem 2rem 2rem;
+    font-size: .7rem;
+}

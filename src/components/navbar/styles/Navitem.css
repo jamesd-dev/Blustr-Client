@@ -1,3 +1,8 @@
+.nav-icon {
+    display: flex;
+    align-items: center;
+}
+
 .nav-icon i {
     font-size: 1rem;
     cursor: pointer;
@@ -11,7 +16,16 @@
     transition: .2s ease-out;
 }
 
-.nav-icon i:hover {
+.nav-icon:hover i, .nav-icon:hover .nav-icon-stat {
     color: var(--highlight-color);
     transition: .2s ease-out;
+}
+
+.nav-icon .nav-icon-stat {
+    padding-left: 1rem;
+    font-size: .7rem;
+}
+
+.nav-icon .selected {
+    color: red;
 }

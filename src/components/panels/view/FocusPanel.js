@@ -42,10 +42,17 @@ export default class FocusPanel extends Component {
     getPanelComponent = () => {
         switch (this.state.panelState) {
             case 'create' : return this.loadCreate();
-            case 'viewCard' : return this.loadViewCard(this.props.story)
+            case 'viewCard' : return this.loadViewCard(this.props.story);
+            case 'auth' : return this.loadAuth();
             default:
                 return <></>
         }
+    }
+
+    setPanelState = (state) => {
+        this.setState({
+            panelState: state
+        });
     }
 
     loadCreate = () => {
@@ -63,6 +70,10 @@ export default class FocusPanel extends Component {
         return <ViewCardPanel
              closeFocusPanel={this.props.closeFocusPanel}
              story={story}
+             loadAuth = {() => {this.setPanelState('auth')}}
+             loggedInUser={this.props.loggedInUser}
+             replaceStory={this.props.replaceStory}
+            removeStory={this.props.removeStory}
              />
     }
 

@@ -46,6 +46,8 @@ export default class StoryCard extends Component {
         elem
       ));
     })
+
+    if(firstXWords) firstXWords = firstXWords
     .split(" ")
     .slice(0, 10)
     .join(" ");

@@ -52,6 +52,12 @@ export default class CreateInput extends Component {
                 index={section.index}
                 sectype={section.type}
               />
+              <i
+                className="fas fa-image create-icon"
+                onClick={this.handleImageInput}
+                index={section.index}
+                sectype={section.type}
+              />
             </div>
           </div>
         );
@@ -85,6 +91,7 @@ export default class CreateInput extends Component {
               value={section.value}
               index={section.index}
               sectype={section.type}
+              onBlur={this.handleFocusOut}
             />
           </div>
         );
@@ -154,6 +161,14 @@ export default class CreateInput extends Component {
   handleTextInput = (e) => {
     let sections = this.state.sections;
     sections[e.target.getAttribute('index')].type = this.state.type.TEXT;
+    this.setState({
+        sections: sections
+    })
+  }
+
+  handleImageInput = (e) => {
+    let sections = this.state.sections;
+    sections[e.target.getAttribute('index')].type = this.state.type.IMAGE;
     this.setState({
         sections: sections
     })

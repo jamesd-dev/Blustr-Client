@@ -56,13 +56,14 @@ export default class CreatePanel extends Component {
     });
 
     // if no images in content, append a random default one to the start
-    if (!coverImage)
+    if (!coverImage) {
       coverImage = this.state.defaultImages[
         Math.floor(Math.random() * this.state.defaultImages.length)
       ];
       content.unshift(
         coverImage
       );
+  }
 
       // create story in database
       axios.post(

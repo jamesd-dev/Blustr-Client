@@ -13,8 +13,21 @@ body {
   background-color: var(--primary-color-bright);
   font-family: 'Poppins', sans-serif;
   color: var(--secondary-color);
+  
 }
 
 .scroll-freeze {
   overflow: hidden;
+}
+
+body::-webkit-scrollbar {
+  width: .8rem;
+}
+ 
+body::-webkit-scrollbar-track {
+  background-color: var(--primary-color-bright);
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: var(--primary-color-light);
 }

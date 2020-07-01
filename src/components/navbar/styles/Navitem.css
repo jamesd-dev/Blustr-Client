@@ -30,3 +30,10 @@
     color: var(--highlight-color);
     transition: .2s ease-out;
 }
+
+.nav-icon-stat {
+    font-weight: 900;
+    color: var(--secondary-color);
+    padding: 0;
+    margin: 0;
+}

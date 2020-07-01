@@ -70,7 +70,7 @@ export default class CreateInput extends Component {
               className="create-textInput"
               onBlur={this.handleFocusOut}
               autoFocus
-              onChange={this.updateValue}
+              onChange={this.updateTextArea}
               value={section.value}
               index={section.index}
               sectype={section.type}
@@ -130,12 +130,18 @@ export default class CreateInput extends Component {
     })
   };
 
+  updateTextArea = (e) => {
+    this.updateValue(e);
+    if (e.target.clientHeight < e.target.scrollHeight) {
+      e.target.style.height = e.target.scrollHeight + 'px';
+    }
+  }
+
   handleFocusOut = (e) => {
     if(e.target.value === '') {
         this.removeSection(e);
-    }
+    } else {
 
-    let type = '';
     let sections = this.state.sections;
 
     // turn image source to image when defocused
@@ -145,6 +151,11 @@ export default class CreateInput extends Component {
         sections: sections
       });
     }
+
+  }
+
+  let type = '';
+    let sections = this.state.sections;
 
     if(sections.length > 0) {
         type = sections[sections.length - 1].type;

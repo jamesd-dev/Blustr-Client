@@ -1,0 +1,13 @@
+#message-bar {
+    width: 100%;
+    height: 3rem;
+    background-color: var(--secondary-color);
+    color: var(--primary-color-bright);
+}
+
+#message-bar p {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+}

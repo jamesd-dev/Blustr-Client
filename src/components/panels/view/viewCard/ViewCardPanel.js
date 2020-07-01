@@ -14,7 +14,13 @@ export default class ViewCardPanel extends Component {
         this.cssLikeDislikeElement();
     }
 
+    state = {
+        story: this.props.story
+    }
+
   render() {
+
+    console.log(this.state.story.likes);
 
     return (
         <>
@@ -26,12 +32,14 @@ export default class ViewCardPanel extends Component {
                 {
                 text: "Like",
                 icon: "fas fa-thumbs-up",
-                click: this.like
+                click: this.like,
+                stat: this.state.story.likes
               },
               {
                 text: "Dislike",
                 icon: "fas fa-thumbs-down",
-                click: this.dislike
+                click: this.dislike,
+                stat: this.state.story.dislikes
               },
               {
                 text: "Cancel",
@@ -39,6 +47,7 @@ export default class ViewCardPanel extends Component {
                 click: this.returnToBrowse,
               },
             ]}
+            onLoad={this.cssLikeDislikeElement}
           />
           </>
     );
@@ -97,7 +106,8 @@ export default class ViewCardPanel extends Component {
             axios
             .get(`${config.API_URL}/user`, { withCredentials: true })
             .then((res) => {
-                this.cssLikeDislikeElement(res);
+                this.updateStoryState();
+                this.cssLikeDislikeElement();
             })
             .catch((err) => {
                 console.log("failed to obtain user data");
@@ -113,10 +123,24 @@ export default class ViewCardPanel extends Component {
     } else {
         axios.patch( `${config.API_URL}/story/${this.props.story._id}/dislike`, {}, { withCredentials: true })
         .then(() => {
+            this.updateStoryState();
             this.cssLikeDislikeElement();
         })
         .catch((err) => {console.log(err)})
     }
+  }
+
+  updateStoryState = () => {
+    axios.get( `${config.API_URL}/story/${this.props.story._id}`)
+    .then((res) => {
+        console.log(res.data);
+        this.setState({
+            story: res.data
+        })
+    })
+    .catch(() => {
+        console.log('failed to update story data');
+    })
   }
 
   cssLikeDislikeElement() {

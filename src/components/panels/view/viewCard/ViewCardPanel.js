@@ -124,7 +124,6 @@ export default class ViewCardPanel extends Component {
             .get(`${config.API_URL}/user`, { withCredentials: true })
             .then((res) => {
                 let altStory = res.data.alteredStories.find((e) => {
-                    console.log(e.storyId + " " + this.props.story._id);
                     return e.storyId === this.props.story._id;
                 });
                 if(altStory.liked) document.getElementsByClassName('fa-thumbs-up')[0].classList.add('selected');

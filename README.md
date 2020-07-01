@@ -124,8 +124,8 @@ https://github.com/polymurph13/Blustr-Client
 https://github.com/polymurph13/Blustr-Server
 
 ### Deploy
-to be added
+https://blustr.herokuapp.com/
 
 ### Slides
-to be added
+https://docs.google.com/presentation/d/1rCkHbn8zZcHc2A1CT1meqmwKjq_Eayd6xOfHiEOBWZI/edit#slide=id.g8af2f7d0a2_0_5
 

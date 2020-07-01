@@ -33,3 +33,12 @@
     border: none;
     outline: none;
 }
+
+.input-image {
+    width: 100%;
+    border-radius: inherit;
+}
+
+#create-image-input-div {
+    padding: 0;
+}

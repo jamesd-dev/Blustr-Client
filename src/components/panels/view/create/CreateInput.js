@@ -79,22 +79,38 @@ export default class CreateInput extends Component {
         );
       }
       case this.state.type.IMAGE: {
-        return (
-          <div className="create-input-div" key={section.index}>
-            <input
-              type="text"
-              name="imageInput"
-              className="create-imageInput"
-              placeholder="image url"
-              autoFocus
-              onChange={this.updateValue}
-              value={section.value}
-              index={section.index}
-              sectype={section.type}
-              onBlur={this.handleFocusOut}
-            />
-          </div>
-        );
+        if(!section.showImage) {
+          return (
+            <div className="create-input-div" key={section.index}>
+              <input
+                type="text"
+                name="imageInput"
+                className="create-imageInput"
+                placeholder="image url"
+                autoFocus
+                onChange={this.updateValue}
+                value={section.value}
+                index={section.index}
+                sectype={section.type}
+                onBlur={this.handleFocusOut}
+              />
+            </div>
+          )
+        } else {
+          return (
+            <div className="create-input-div" id='create-image-input-div' key={section.index}>
+              <img
+                src={section.value}
+                name="imageInput"
+                className="input-image"
+                index={section.index}
+                sectype={section.type}
+                alt={'user inserted img'}
+                onClick={this.handleEditImage}
+              />
+            </div>
+          )
+        }
       }
       default: {
         console.log("Unknown section type in CreateInput");
@@ -120,12 +136,21 @@ export default class CreateInput extends Component {
     }
 
     let type = '';
+    let sections = this.state.sections;
 
-    if(this.state.sections.length > 0) {
-        type = this.state.sections[this.state.sections.length - 1].type;
+    // turn image source to image when defocused
+    if(sections[e.target.getAttribute('index')].type === this.state.type.IMAGE) {
+      sections[e.target.getAttribute('index')].showImage = true;
+      this.setState({
+        sections: sections
+      });
+    }
+
+    if(sections.length > 0) {
+        type = sections[sections.length - 1].type;
     }
     if(type !== this.state.type.BLANK && type !== this.state.type.OPTIONS) {
-        let sections = this.state.sections;
+
         sections.push({ type: this.state.type.BLANK, index: 0, value: "" });
         this.setState({
             sections: sections
@@ -164,6 +189,19 @@ export default class CreateInput extends Component {
     this.setState({
         sections: sections
     })
+  }
+
+  handleEditImage = (e) => {
+    let sections = this.state.sections;
+
+        // make image source editable when image is clicked
+        if(sections[e.target.getAttribute('index')].type === this.state.type.IMAGE) {
+          sections[e.target.getAttribute('index')].showImage = false;
+        }
+
+        this.setState({
+            sections: sections
+        });
   }
 
   handleImageInput = (e) => {

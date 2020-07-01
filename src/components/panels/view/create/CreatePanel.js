@@ -86,7 +86,7 @@ export default class CreatePanel extends Component {
   getFormContent = () => {
     let formChildren = document.getElementById("form").childNodes;
     let content = [].map.call(formChildren, (section) => {
-      return section.firstChild.value;
+      return section.firstChild.value || section.firstChild.src;
     });
     content = [].filter.call(content, (section) => {
       return section;
